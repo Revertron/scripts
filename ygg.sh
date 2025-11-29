@@ -10,7 +10,7 @@ apt update && apt install yggdrasil -y
 if [ ! -f /etc/yggdrasil/yggdrasil.conf ];
 then
   echo "Generating initial configuration file /etc/yggdrasil/yggdrasil.conf"
-  /usr/bin/yggdrasil -genconf > /etc/yggdrasil/yggdrasil.conf
+  /usr/sbin/yggdrasil -genconf > /etc/yggdrasil/yggdrasil.conf
   # Add some peers
   sed -i 's|  Peers: \[\]|  Peers: [ "tcp://77.247.225.234:7743", "tcp://45.95.38.230:7743", "tcp://31.57.241.91:7743" ]|' /etc/yggdrasil/yggdrasil.conf
 
