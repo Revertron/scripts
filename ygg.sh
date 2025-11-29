@@ -7,6 +7,15 @@ echo 'deb [signed-by=/usr/local/apt-keys/yggdrasil-keyring.gpg] http://neilalexa
 
 apt update && apt install yggdrasil -y
 
-# Add some peers
-sed -i 's|  Peers: \[\]|  Peers: [ "tcp://77.247.225.234:7743", "tcp://45.95.38.230:7743", "tcp://31.57.241.91:7743" ]|' /etc/yggdrasil/yggdrasil.conf
+if [ ! -f /etc/yggdrasil/yggdrasil.conf ];
+then
+  echo "Generating initial configuration file /etc/yggdrasil/yggdrasil.conf"
+  /usr/bin/yggdrasil -genconf > /etc/yggdrasil/yggdrasil.conf
+  # Add some peers
+  sed -i 's|  Peers: \[\]|  Peers: [ "tcp://77.247.225.234:7743", "tcp://45.95.38.230:7743", "tcp://31.57.241.91:7743" ]|' /etc/yggdrasil/yggdrasil.conf
+
+  chown root:yggdrasil /etc/yggdrasil/yggdrasil.conf
+  chmod 640 /etc/yggdrasil/yggdrasil.conf
+fi
+
 systemctl restart yggdrasil
